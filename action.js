@@ -3,23 +3,23 @@ const searchBtn = document.getElementById('searchBtn');
 searchBtn.addEventListener('click', () => {
     //Clear previous result
     document.getElementById('mealsContainer').innerHTML = '';
-
     //get user input
     const userInput = document.getElementById('userInput').value;
     const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=' + userInput;
     fetch(url)
     .then(response => response.json())
     .then(data => {
-        console.log(data)
+        //console.log(data);
         data.meals.forEach(meal => {
             displayMeals(meal);
         });
     })
     .catch(error => {
-        document.getElementById('mealsContainer').innerHTML = `Sorry! no meal for you today!`;
+        document.getElementById('mealsContainer').innerHTML = `<h2 style='color: white;'>Sorry! no meal for you today!</h2>`;
         document.getElementById('mealDetails').innerHTML = '';
     })
 });
+
 
 const displayMeals = (meal) => {
     const mealItem = document.createElement('div');
@@ -29,14 +29,12 @@ const displayMeals = (meal) => {
         <h2>${meal.strMeal}</h2>
     `;
     document.getElementById('mealsContainer').appendChild(mealItem);
-
     displayMealDetail(meal, mealItem);
 }
 
 
 const displayMealDetail = (meal, mealItem) => {
     mealItem.addEventListener('click', () => {
-
         const mealDetail = document.getElementById('mealDetails');
         //clear previous result
         mealDetail.innerHTML = '';
@@ -59,10 +57,7 @@ const displayMealDetail = (meal, mealItem) => {
             p.innerHTML = `<span style='color: tomato;'>☑</span> ${meal[measure]} ${meal[ingredient]}`;
             mealDetail.appendChild(p);
         });
-
         //document.getElementById('mealsContainer').prepend(mealDetail);
         document.getElementsByTagName('body')[0].prepend(mealDetail);
-
     });
 }
-
